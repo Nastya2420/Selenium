@@ -26,6 +26,7 @@ public class cardDesign {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+
     }
 
     @AfterEach
@@ -35,16 +36,18 @@ public class cardDesign {
     }
 
     @Test
-    void shouldTest() throws InterruptedException {
+    void shouldTest () throws InterruptedException {
         driver.get("http://localhost:9999");
-        List<WebElement> inputs = driver.findElements(By.tagName("input"));
-        inputs.get(0).sendKeys("Ольга Абрамова");
-        inputs.get(1).sendKeys("+79569999999");
-        driver.findElement(By.className("")).click();
-        driver.findElement(By.tagName("")).click();
+        List<WebElement> element1 = driver.findElements(By.className("input__control"));
+        element1.get(0).sendKeys("Ольга Абрамова");
+        List<WebElement> element2 = driver.findElements(By.className("input__control"));
+        element2.get(1).sendKeys("+79669999999");
+        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.className("button")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual = driver.findElement(By.tagName("")).getText().trim();
+        String actual = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
         Assertions.assertEquals(expected,actual);
+
     }
 
 }
