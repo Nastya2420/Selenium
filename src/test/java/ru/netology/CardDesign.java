@@ -10,13 +10,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.List;
 
-public class cardDesign {
+public class CardDesign {
     private WebDriver driver;
     ChromeOptions options = new ChromeOptions();
 
     @BeforeAll
     static void setUpAll() {
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
+        //System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
         WebDriverManager.chromedriver().setup();
     }
 
@@ -36,13 +36,11 @@ public class cardDesign {
     }
 
     @Test
-    void shouldTest () throws InterruptedException {
-        driver.get("http://localhost:9999");
-        List<WebElement> element1 = driver.findElements(By.className("input__control"));
-        element1.get(0).sendKeys("Ольга Абрамова");
-        List<WebElement> element2 = driver.findElements(By.className("input__control"));
-        element2.get(1).sendKeys("+79669999999");
-        driver.findElement(By.className("checkbox__box")).click();
+    void shouldTest (){
+        driver.get("http://localhost:9999/");
+        driver.findElement(By.cssSelector("[data-test-id='name']input")).sendKeys("Ольга Абрамова-Иванова");
+        driver.findElement(By.cssSelector("[data-test-id='phone']input")).sendKeys("+79669999999");
+        driver.findElement(By.cssSelector("[data-test-id='agreement']")).click();
         driver.findElement(By.className("button")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
         String actual = driver.findElement(By.cssSelector("[data-test-id=order-success]")).getText().trim();
